@@ -5,8 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
 
-//connect database mysql "QLNT"
-// const connect=require('./connect/connectMySQL');
+//passport
 
 var customerRouter = require('./routes/customer');
 var adminRouter = require('./routes/admin');
@@ -25,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', customerRouter);
 app.use('/landlords', landlordsRouter);
 app.use('/admin', adminRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

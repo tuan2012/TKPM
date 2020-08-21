@@ -1,4 +1,5 @@
 const connectMySQL=require('../../connect/connectMySQL');
+var bCrypt = require('bcrypt-nodejs');
 const addHotel=(req,res,pathFileImage)=>{
     
     let uri_Image=pathFileImage;
@@ -23,12 +24,12 @@ const deleteHotel=(req,res)=>{
     
 }
 //Lấy danh sách trọ
-//Tham số truyền vào là Id Chu Tro
+//Tham số truyền vào là tên đăng nhập Chu Tro
 const getListHotel=(req,res)=>{
-    let {idChuTro}=req.body;
-    let sql="select *from phongtro where IdChuTro=? ";
+    let {tenDangNhap}=req.body;
+    let sql="select *from phongtro where TenDangNhap=? ";
     //lay id chu tro
-    connectMySQL.query(sql,idChuTro,(err,results,feild)=>{
+    connectMySQL.query(sql,tenDangNhap,(err,results,feild)=>{
         if(err) return err;
         res.status(200).json(results);
     });
@@ -48,9 +49,9 @@ const updateHotel=(req,res)=>{
 //Lay danh sách user trong các phòng trọ của chủ trọ
 //Tham số truyền vào là IdChuTro
 const getListUser=(req,res)=>{
-    let sql="select * from ((chutro ct join phongtro pt) on pt.IdChuTro=?) join khachhang kh) on kh.IdPhongTro=pt.Id";
-    let IdChuTro=req.body;
-    connectMySQL.query(sql,IdChuTro,(err,results,feild)=>{
+    let sql="select * from ((chutro ct join phongtro pt) on pt.TenDangNhap=?) join khachhang kh) on kh.IdPhongTro=pt.Id";
+    let tenDangNhap=req.body;
+    connectMySQL.query(sql,tenDangNhap,(err,results,feild)=>{
         if(err)return  err;
         res.status(200).json(results);
     });
@@ -70,10 +71,10 @@ const deleteUser=(req,res)=>{
 //Thêm user vào trong nhà trọ
 //Tham số truyền vào là Id khách hàng và id phòng trọ
 const updateUser=(req,res)=>{
-    let {IdKhachHang,IdPhongTro}=req.body;
-    let sql="update khachhang set IdPhongTro=? where id=? ";
+    let {tenDangNhap,IdPhongTro}=req.body;
+    let sql="update thongtinkhachhang set IdPhongTro=? where TenDangNhap=? ";
     //lay id chu tro
-    connectMySQL.query(sql,[IdPhongTro,IdKhachHang],(err,results,feild)=>{
+    connectMySQL.query(sql,[IdPhongTro,tenDangNhap],(err,results,feild)=>{
         if(err) return err;
         res.status(200).json({message:"Add Success"})
     });
@@ -113,7 +114,33 @@ const getListNotice=(req,res)=>{
         res.status(200).json(results);
     });
 }
-
+const deleteNotice=(req,res)=>{
+    let{Id}=req.body;
+    let sql="update thongbao set isDelete=false where Id=?"
+    connectMySQL.query(sql,Id,(err,results,feilds)=>{
+        if(err)return err;
+        res.json({message:"Delete Success"});
+    })
+}
+const login=(res,res)=>{
+    let {username,password}=req.body;
+    let sql="select * from chutro where TenDangNhap=?";
+    connectMySQL.query(sql,username,(err,results)=>{
+        if(results.length>0&&bCrypt.compare(password,results[0].MatKhau))
+        {
+            res.redirect('/lanlord/dashboard')
+        }
+        res.redirect('/lanlord');
+    })
+}
+const signup=(req,res)=>{
+    let{tenDangNhap,matKhau,hoTen,Sdt,diaChi,soCMND}=req.body;
+    let sql="insert chutro(TenDangNhap,MatKhau,HoTen,SoDienThoai,DiaChi,SoCMND) values(?,?,?,?,?,?)";
+    connectMySQL.query(sql,[tenDangNhap,bCrypt.hashSync(matKhau, bCrypt.genSaltSync(10), null),hoTen,Sdt,diaChi,soCMND],(err,results)=>{
+        if(err){res.redirect('/lanlord/signup'); return err;}
+        res.redirect('/lanlord');
+    })
+}
 module.exports={addHotel,
     getListHotel,
     updateHotel,

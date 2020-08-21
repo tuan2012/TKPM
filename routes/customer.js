@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const mdHome=require('../model/customer/customer');
+const mdHome=require('../controller/customer/customer');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   mdHome.listHotel(req,res);

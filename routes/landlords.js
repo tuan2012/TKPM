@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const upload=require('../connect/multer');
-const landlords=require('../model/landlord/landlord');
+const landlords=require('../controller/landlord/landlord');
 
 
 /* GET users listing. */
