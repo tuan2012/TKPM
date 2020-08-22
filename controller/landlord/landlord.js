@@ -122,7 +122,7 @@ const deleteNotice=(req,res)=>{
         res.json({message:"Delete Success"});
     })
 }
-const login=(res,res)=>{
+const login=(req,res)=>{
     let {username,password}=req.body;
     let sql="select * from chutro where TenDangNhap=?";
     connectMySQL.query(sql,username,(err,results)=>{
@@ -137,7 +137,9 @@ const signup=(req,res)=>{
     let{tenDangNhap,matKhau,hoTen,Sdt,diaChi,soCMND}=req.body;
     let sql="insert chutro(TenDangNhap,MatKhau,HoTen,SoDienThoai,DiaChi,SoCMND) values(?,?,?,?,?,?)";
     connectMySQL.query(sql,[tenDangNhap,bCrypt.hashSync(matKhau, bCrypt.genSaltSync(10), null),hoTen,Sdt,diaChi,soCMND],(err,results)=>{
-        if(err){res.redirect('/lanlord/signup'); return err;}
+        if(err){ 
+            res.send()
+        }
         res.redirect('/lanlord');
     })
 }

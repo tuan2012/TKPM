@@ -4,7 +4,7 @@ const listHotel=(req,res)=>{
     let sql="select *from phongtro pt where pt.isDelete=false";
     connectMySQL.query(sql,(err,results,fields)=>{
         if(err) return err;
-        res.json(results);
+        res.render("custommer/index",{listHotel:results});
     });
 }
 //Xem chi tiết từng nhà trọ

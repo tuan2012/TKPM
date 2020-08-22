@@ -3,7 +3,7 @@
         <meta charset="UTF-8">
         <title>NLP</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="./css2.css">
+        <link rel="stylesheet" type="text/css" href="../css2.css">
         <l<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -86,56 +86,18 @@
     <div class="body">
         <div class="ctn">
             <div class="con-left">
+                <% listHotel.forEach(hotel=>{%>
                 <div class="newcard">
-                    <img src="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both">
-                    <div class="text-name">135B Trần Hưng Đạo</div>
-                    <h6>Nhà trọ</h6>
+                    <img src=<%=hotel.HinhAnh%>
+                    <div class="text-name"><%=hotel.TenTro%></div>
+                    <h6><%=hotel.TenTro%></h6>
                     <h6>|</h6>
-                    <h6>2.000.000đ</h6>
+                    <h6><%=hotel.Gia%></h6>
                     <h6>|</h6>
-                    <h6>12m<sup>2</sup></h6>
-                    <p>Dãy phòng trọ nằm ở 135B Trân Hưng Đạo, có 3 dãy phòng với tổng 50 phòng trọ. Rộng rãi thoải mái</p>
+                    <h6><%=hotel.DienTich%><sup>2</sup></h6>
+                    <p><%=hotel.GhiChu%></p>
                 </div>
-                <div class="newcard">
-                    <img src="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both">
-                    <div class="text-name">135B Trần Hưng Đạo</div>
-                    <h6>Nhà trọ</h6>
-                    <h6>|</h6>
-                    <h6>2.000.000đ</h6>
-                    <h6>|</h6>
-                    <h6>12m<sup>2</sup></h6>
-                    <p>Dãy phòng trọ nằm ở 135B Trân Hưng Đạo, có 3 dãy phòng với tổng 50 phòng trọ. Rộng rãi thoải mái</p>
-                </div>
-                <div class="newcard">
-                    <img src="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both">
-                    <div class="text-name">135B Trần Hưng Đạo</div>
-                    <h6>Nhà trọ</h6>
-                    <h6>|</h6>
-                    <h6>2.000.000đ</h6>
-                    <h6>|</h6>
-                    <h6>12m<sup>2</sup></h6>
-                    <p>Dãy phòng trọ nằm ở 135B Trân Hưng Đạo, có 3 dãy phòng với tổng 50 phòng trọ. Rộng rãi thoải mái</p>
-                </div>
-                <div class="newcard">
-                    <img src="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both">
-                    <div class="text-name">135B Trần Hưng Đạo</div>
-                    <h6>Nhà trọ</h6>
-                    <h6>|</h6>
-                    <h6>2.000.000đ</h6>
-                    <h6>|</h6>
-                    <h6>12m<sup>2</sup></h6>
-                    <p>Dãy phòng trọ nằm ở 135B Trân Hưng Đạo, có 3 dãy phòng với tổng 50 phòng trọ. Rộng rãi thoải mái</p>
-                </div>
-                <div class="newcard">
-                    <img src="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both">
-                    <div class="text-name">135B Trần Hưng Đạo</div>
-                    <h6>Nhà trọ</h6>
-                    <h6>|</h6>
-                    <h6>2.000.000đ</h6>
-                    <h6>|</h6>
-                    <h6>12m<sup>2</sup></h6>
-                    <p>Dãy phòng trọ nằm ở 135B Trân Hưng Đạo, có 3 dãy phòng với tổng 50 phòng trọ. Rộng rãi thoải mái</p>
-                </div>
+              <%})%>
             </div>
             <div class="con-right">
             </div>

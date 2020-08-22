@@ -9,5 +9,4 @@ router.get('/listUser',(req,res)=>{
 router.get('/listHotel',(req,res)=>{
     admin.getListHotel(req,res);
 });
-r
 module.exports = router;
