@@ -6,8 +6,9 @@ const landlords=require('../controller/landlord/landlord');
 
 /* GET users listing. */
 router.get('/addHotel', function(req, res, next) {
-    router.render("addHotel",{title:"title"});
+    res.render("form");
 });
+
 router.post('/addHotel', function (req, res) {
     upload.single('image-hotel')(req, res, function (err) {
       if (err instanceof multer.MulterError) {

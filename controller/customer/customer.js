@@ -14,7 +14,7 @@ const singleProduct=(req,res)=>{
     let sql="select *from phongtro where id=?";
     connectMySQL.query(sql,[id],(err,results,fields)=>{
         if(err)return err;
-        res.json(results);
+        res.render("custommer/new", {singleHotel:results[0]}); // Huy xem chi tiet san pham
     });
 }
 //Xem thông báo của nhà trọ

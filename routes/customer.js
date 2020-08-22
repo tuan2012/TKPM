@@ -13,6 +13,9 @@ router.get("/login",(req,res,next)=>{
   res.render("login");
 })
 router.post("/login",(req,res,next)=>{
-  
 })
+router.get("/signup",(req,res,next)=>{ // Huy đăng kí
+  res.render("signup");
+})
+
 module.exports = router;
