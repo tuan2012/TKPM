@@ -90,12 +90,12 @@
                 <dd class="col-sm-8 lead">
                     2.000.000
                 </dd>
-                <dt class="col-sm-4 h4"><strong>Loại:</strong></dt>
-                <dd class="col-sm-8 lead">{{ProInfo₫</dd>
-                <dt class="col-sm-4 h4"><strong>Giá mua ngay</strong></dt>
-                <dd class="col-sm-8 lead">{{ProInfo.buy_now}}₫</dd>
-                <dt class="col-sm-4 h4"><strong>Kết thúc vào</strong></dt>
-                <dd class="col-sm-8 lead">{{ProInfo.time}}</dd>
+                <dt class="col-sm-4 h4"><strong>Khu vực:</strong></dt>
+                <dd class="col-sm-8 lead"><%=singleHotel.DiaChi%></dd>
+                <dt class="col-sm-4 h4"><strong>Giá:</strong></dt>
+                <dd class="col-sm-8 lead"><%=singleHotel.Gia%>₫</dd>
+                <dt class="col-sm-4 h4"><strong>Diện tích:</strong></dt>
+                <dd class="col-sm-8 lead"><%=singleHotel.Dientich%></dd>
             </dl>
         </div>
     </div>
@@ -107,51 +107,26 @@
         </dt>
         <dl class="row" style="margin: 10px">
             <dt class="col-sm-12">
-                <div class="collapse col-sm-8" id="OfferWindow">
-                    <form class="card card-body" action="/offer/id={{ProInfo.pro_ID}}" style="margin: 10px;" method="post">
-                        <div class="form-group row">
-                            <label for="highestCurrentPrice" class="col-sm-3 col-form-label">Giá hiện tại</label>
-                            <div id="highestCurrentPrice" class="col-sm-5">{{ProInfo.price}} VNĐ</div>
-                        </div> 
-                        <div class="form-group row">
-                            <label for="stepPrice" class="col-sm-3 col-form-label">Bước giá</label>
-                            <div id="stepPrice" class="col-sm-5">{{ProInfo.step}} VNĐ</div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="offerPrice" class="col-sm-3 col-form-label">Giá của bạn:</label>
-                            <input id="offerPrice" name="price"> Lưu ý: phải là bội của bước giá!!
-                             <div id="offerPrice" class="input-group col-sm-5">
-                                <input type="number" class="form-control" aria-describedby="button-addon4" id="displayOfferPrice" value="{{Proposal}}">
-                                <div class="input-group-append" id="button-addon4">
-                                    <!-- <button class="btn btn-outline-secondary" type="button" onclick="changeprice(0,{{ProInfo.price}},{{ProInfo.step}})" id="decreasePrice">-</button>
-                                    <button class="btn btn-outline-secondary" type="button" onclick="changeprice(1,{{ProInfo.price}},{{ProInfo.step}})">+</button> -->
-                                </div>
-                            </div> 
-                        </div>
-                        <button type="submit" class="btn btn-primary">Ra giá</button>
-                    </form>
-                </div>
+                
             </dt>
 
-        <dt class="col-sm-3 text-truncate h5">Sản phẩm được đăng bởi:</dt>
-        <dd class="col-sm-9 lead">{{Seller.user_Name}}</dd>
+        <dt class="col-sm-6 text-truncate h5">Sản phẩm đăng bởi:</dt>
+        <dd class="col-sm-6 lead"><%=singleHotel.IdChuTro%></dd>
 
 
-        <dt class="col-sm-3 text-truncate h5">Đăng lúc:</dt>
-        <dd class="col-sm-9 lead">{{ProInfo.post_date}}</dd>
+        <dt class="col-sm-3 text-truncate h5"></dt>
+        <dd class="col-sm-9 lead"></dd>
 
 
-        <dt class="col-sm-3 text-truncate h5">Lịch sử đấu giá</dt>
-        <dd class="col-sm-9">
-        </dd>
+        <dt class="col-sm-3 text-truncate h5"></dt>
+        <dd class="col-sm-9"></dd>
     </dl>
 
     <hr />
 
     <div class="row justify-content-md-center" style="margin: 10px">
-        <h5 class="col-sm-12 h5">Mô tả sản phẩm</h5>
-        <p class="col-sm-12">{{ProInfo.info}}</p>
-        <button type="button" class="btn btn-dark">Bổ sung</button>
+        <h5 class="col-sm-12">Mô tả sản phẩm</h5>
+        <p class="col-sm-12"><%=singleHotel.GhiChu%></p>
     </div>
 
     <hr />

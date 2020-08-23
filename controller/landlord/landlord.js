@@ -147,9 +147,14 @@ const signup=(req,res)=>{
     let sql="insert khachhang(TenDangNhap,MatKhau,PhanQuyen) values(?,?,?)";
     connectMySQL.query(sql,[tenDangNhap,bCrypt.hashSync(matKhau),phanQuyen],(err,results)=>{
         
-        if(err) res.redirect('signup')
+        if(err) {
+            console.log(err)
+            res.redirect('signup')
+           
+            }
         else
         {
+            console.log(results);
             if(phanQuyen==1)
                 sql="insert thongtinkhachhang(TenDangNhap,HoTen,SoDienThoai,DiaChi,soCMND) values(?,?,?,?,?)";
             else if(phanQuyen==2)

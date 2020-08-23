@@ -3,6 +3,7 @@ const getListUser=(req,res)=>{
     let sql="SELECT list.*, kh.isDelete from (SELECT ttkh.TenDangNhap, ttkh.HoTen, ttkh.DiaChi,ttkh.SoDienThoai from thongtinkhachhang ttkh UNION select ct.TenDangNhap,ct.HoTen,ct.DiaChi, ct.SoDienThoai from chutro ct) list INNER JOIN khachhang kh on list.TenDangNhap=kh.TenDangNhap ";
     connectMySQL.query(sql,(err,results,feild)=>{
         if(err) return err;
+        console.log(results);
         res.json(results);  
     });
 };
