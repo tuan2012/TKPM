@@ -3,7 +3,7 @@
         <meta charset="UTF-8">
         <title>NLP</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="./css2.css">
+        <link rel="stylesheet" type="text/css" href="../css2.css">
         <l<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -84,51 +84,59 @@
                 <div class="col-md-7">
                     <div class="form-group">
                         <label style="color: black;" for="input_product_name">Tên sản phẩm</label>
-                        <input class="form-control form-control-lg" name="name" id="input_product_name" type="text"
+                        <input class="form-control form-control-lg" name="tenTro" id="input_product_name" type="text"
                             placeholder="Tên sản phẩm">
                     </div>
                     <div class="form-group">
-                        <label style="color: black;" for="gia_hien_tai">Giá hiện tại</label>
+                        <label style="color: black;" for="gia_hien_tai">Giá tháng</label>
                         <div class="input-group" id="gia_hien_tai">
-                            <input type="text" class="form-control" name="price" placeholder="000.000 VNĐ">
+                            <input type="text" class="form-control" name="gia" placeholder="000.000 VNĐ">
                             <div class="input-group-append">
                                 <span class="input-group-text">VNĐ</span>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label style="color: black;" for="buoc_gia">Bước giá</label>
+                        <label style="color: black;" for="buoc_gia">Diện tích</label>
                         <div class="input-group" id="buoc_gia">
-                            <input type="text" class="form-control" name="pricestep" placeholder="000.000 VNĐ">
+                            <input type="text" class="form-control" name="dienTich" placeholder="">
                             <div class="input-group-append">
-                                <span class="input-group-text">VNĐ</span>
+                                <span class="input-group-text">m<sup>2<sup></span>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label style="color: black;" for="mua_ngay">Giá mua ngay</label>
-                        <div class="input-group" id="mua_ngay">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input">
-                                </div>
-                            </div>
-                            <input type="text" class="form-control" name="pricenow" aria-label="Text input with checkbox"
-                                placeholder="000.000 VNĐ">
-                            <div class="input-group-append">
-                                <span class="input-group-text">VNĐ</span>
-                            </div>
+                        <label style="color: black;" for="mua_ngay">Khu vực</label>
+                        <div class="input-group" style="width: 400px;
+                                                        height: 35px;" id="khu-vuc">
+                            <select name="diaChi">
+                                <option value="q1" selected="selected">Quận 1</option>
+                                <option value="q2">Quận 2</option>
+                                <option value="q3">Quận 3</option>
+                                <option value="q4">Quận 4</option>
+                                <option value="q5">Quận 5</option>
+                                <option value="q6">Quận 6</option>
+                                <option value="q7">Quận 7</option>
+                                <option value="q8">Quận 8</option>
+                                <option value="q9">Quận 9</option>
+                                <option value="q10">Quận 10</option>
+                                <option value="q11">Quận 11</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="example-datetime-local-input" style="color: black;">Hết hạn lúc</label>
-                        <input class="form-control" name="datetime" type="datetime-local" value="2020-01-01T00:00:01"
-                            id="example-datetime-local-input">
-                    </div>
-                    <div class="form-group custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="tu_dong_gia_han">
-                        <label class="custom-control-label" for="tu_dong_gia_han" style="color: black;">Tự động gia hạn</label>
+                        <label style="color: black;" for="mua_ngay">Khu vực</label>
+                        <div class="input-group" style="width: 400px;
+                                                        height: 35px;" id="khu-vuc">
+                            <select name="idLoaiTro">
+                                <option value="1" selected="selected">Phòng trọ</option>
+                                <option value="2">Kí túc xá</option>
+                                <option value="3">Chung cư</option>
+                                <option value="4">Ở ghép</cưoption>
+                                <option value="5">Nhà nguyên căn</cưoption>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,8 +145,10 @@
 
             <div class="row justify-content-md-center h3">Mô tả chi tiết sản phẩm</div>
             <div class="row justify-content-md-center">
-                <textarea style="margin-top: 50px;" name="content" id="editor">
-                    <p>Mô tả chi tiết về sản phẩm của bạn ở đây.</p>
+                <textarea style="margin-top: 10px;
+                                width: 500px;
+                                text-align: left;" name="ghiChu" id="editor">
+                    
                 </textarea>
             </div>
 

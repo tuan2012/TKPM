@@ -3,37 +3,167 @@
         <meta charset="UTF-8">
         <title>NLP</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="./css3.css">
+        <link rel="stylesheet" type="text/css" href="../css2.css">
         <l<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container-login">
-       <div class="form">
-           <div class="text">
-                <div class="title">SIGN UP</div>
-                <form>
-                    <div class="user-name">
-                        <input type="text" placeholder="Username">
-                    </div>
-                    <div class="user-pass">
-                        <input type="password" placeholder="Password" >
-                    </div>
-                    <div class="user-pass">
-                        <input type="password" placeholder="Re-password" >
-                    </div>
-                    <div class="radio"> 
-                        <input type="radio" id="male" name="gender" value="male">
-                        <label for="male">Khách</label><br>
-                        <input type="radio" id="female" name="gender" value="female">
-                        <label for="female">Chủ trọ</label><br>
-                    </div>
-                    <div class="submit">
-                        <button>Sign up</button>
-                    </div>
-                </form>
-            </div>  
-       </div>
+    <div class="header"> 
+        <div class="icon">homestayUs</div>
+        <div class="nav"> 
+            <a href="/">
+                <span class="text">Phòng trọ</span> 
+            </a>
+        </div>
+        <div class="nav"> 
+            <a href="/">
+                <span class="text">Kí túc xá</span> 
+            </a>
+        </div>
+        <div class="nav"> 
+            <a href="/">
+                <span class="text">Chung cư</span> 
+            </a>
+        </div>
+        <div class="nav"> 
+            <a href="/">
+                <span class="text">Ở ghép</span> 
+            </a>
+        </div>
+        <div class="nav"> 
+            <a href="/">
+                <span class="text">Nhà nguyên căn</span> 
+            </a>
+        </div>
+        <div class="nav-user">Đăng nhập</div>
+        <div class="nav-user">Đăng ký</div> 
+    </div>
+    <div class="navigation">
+        <div class="nav-container">
+                <select name="pay">
+                    <option value="">--Chọn--</option>
+                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
+                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
+                </select>
+                <select name="pay">
+                    <option value="">--Chọn--</option>
+                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
+                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
+                </select>
+                <select name="pay">
+                    <option value="">--Chọn--</option>
+                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
+                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
+                </select>
+                <select name="pay">
+                    <option value="">--Chọn--</option>
+                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
+                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
+                </select>
+                <div class="btn">
+                    <button>Search</button>
+                </div>
+        </div>
+    </div>
+    <div class="body">
+        <div class="container">
+        <div class="row" style="margin: 20px">
+        <div class="col-md-5">
+            <div class="row" style="margin-bottom: 10px;">
+                <img class="img-fluid rounded mx-auto d-block"
+                    src="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both" alt="">
+            </div>
+            <div class="row">
+                <img class="img-fluid rounded mx-auto d-block" width="100"
+                    src="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both" alt="">
+            </div>
+        </div>
+        <div class="col container">
+            <h1 class="display-4"> <%=singleHotel.TenTro%>
+                <button type="button" class="btn btn-danger">Delete</button> 
+            </h1>
+            <dl class="row">
+                <dt class="col-sm-4 h4"><strong>Giá tiền:</strong></dt>
+                <dd class="col-sm-8 lead">
+                    2.000.000
+                </dd>
+                <dt class="col-sm-4 h4"><strong>Loại:</strong></dt>
+                <dd class="col-sm-8 lead">{{ProInfo₫</dd>
+                <dt class="col-sm-4 h4"><strong>Giá mua ngay</strong></dt>
+                <dd class="col-sm-8 lead">{{ProInfo.buy_now}}₫</dd>
+                <dt class="col-sm-4 h4"><strong>Kết thúc vào</strong></dt>
+                <dd class="col-sm-8 lead">{{ProInfo.time}}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <hr />
+
+    <dl class="row" style="margin: 10px">
+        <dt class="col-sm-12">
+        </dt>
+        <dl class="row" style="margin: 10px">
+            <dt class="col-sm-12">
+                <div class="collapse col-sm-8" id="OfferWindow">
+                    <form class="card card-body" action="/offer/id={{ProInfo.pro_ID}}" style="margin: 10px;" method="post">
+                        <div class="form-group row">
+                            <label for="highestCurrentPrice" class="col-sm-3 col-form-label">Giá hiện tại</label>
+                            <div id="highestCurrentPrice" class="col-sm-5">{{ProInfo.price}} VNĐ</div>
+                        </div> 
+                        <div class="form-group row">
+                            <label for="stepPrice" class="col-sm-3 col-form-label">Bước giá</label>
+                            <div id="stepPrice" class="col-sm-5">{{ProInfo.step}} VNĐ</div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="offerPrice" class="col-sm-3 col-form-label">Giá của bạn:</label>
+                            <input id="offerPrice" name="price"> Lưu ý: phải là bội của bước giá!!
+                             <div id="offerPrice" class="input-group col-sm-5">
+                                <input type="number" class="form-control" aria-describedby="button-addon4" id="displayOfferPrice" value="{{Proposal}}">
+                                <div class="input-group-append" id="button-addon4">
+                                    <!-- <button class="btn btn-outline-secondary" type="button" onclick="changeprice(0,{{ProInfo.price}},{{ProInfo.step}})" id="decreasePrice">-</button>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="changeprice(1,{{ProInfo.price}},{{ProInfo.step}})">+</button> -->
+                                </div>
+                            </div> 
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ra giá</button>
+                    </form>
+                </div>
+            </dt>
+
+        <dt class="col-sm-3 text-truncate h5">Sản phẩm được đăng bởi:</dt>
+        <dd class="col-sm-9 lead">{{Seller.user_Name}}</dd>
+
+
+        <dt class="col-sm-3 text-truncate h5">Đăng lúc:</dt>
+        <dd class="col-sm-9 lead">{{ProInfo.post_date}}</dd>
+
+
+        <dt class="col-sm-3 text-truncate h5">Lịch sử đấu giá</dt>
+        <dd class="col-sm-9">
+        </dd>
+    </dl>
+
+    <hr />
+
+    <div class="row justify-content-md-center" style="margin: 10px">
+        <h5 class="col-sm-12 h5">Mô tả sản phẩm</h5>
+        <p class="col-sm-12">{{ProInfo.info}}</p>
+        <button type="button" class="btn btn-dark">Bổ sung</button>
+    </div>
+
+    <hr />
+
+    <div class="row justify-content-around" style="margin: 10px">
+        <div class="row justify-content-around" style="margin: 10px">
+        </div>
+    </div>
+</div>
+    </div>
+    
+    <div class="footer">
+
     </div>
 </body>
