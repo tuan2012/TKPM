@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<head>
+        <meta charset="UTF-8">
+        <title>NLP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../css2.css">
+        <l<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="header"> 
+        <div class="icon">homestayUs</div>
+        <div class="nav"> 
+            <a href="/">
+                <% if (hotel) { %>
+                <span class="text">Quản lý sản phẩm</span> 
+                <% } %>
+                <% if (user) { %>
+                    <span class="text">Quản lý người dùng</span> 
+                    <% } %>
+            </a>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Admin: Duc Huy</button>
+            <div class="dropdown-content">
+            <a href="/admin/listHotel">Quản lý sản phẩm</a>
+            <a href="/admin/listUser">Quản lý người dùng</a>
+            <a href="#">Đăng xuất</a>
+            </div>
+          </div>
+        <!-- <div class="nav-user">Đăng nhập</div>
+        <div class="nav-user">Đăng ký</div>  -->
+    </div>
+    <div class="body">
+        <% if (hotel) { %>
+        <div class="newtable">
+            <table id="customers">
+                <tr class="titletable" >
+                  <th style="background-color: #FA991C;">Tên trọ</th>
+                  <th style="background-color: #FA991C;">Khu vực</th>
+                  <th style="background-color: #FA991C;">Giá</th>
+                  <th style="background-color: #FA991C;">Diện tích</th>
+                  <th style="background-color: #FA991C;">Ghi chú</th>
+                  <th style="background-color: #FA991C;">Tình trạng</th>
+                  <th style="background-color: #FA991C;
+                            max-width: 50px;
+                            width: 50px;">Option</th>
+                </tr>
+                <% hotel.forEach(singleHotel=>{%>
+                    <tr">
+                        <td><%=singleHotel.TenTro%></td>
+                        <td><%=singleHotel.DiaChi%></td>
+                        <td><%=singleHotel.Gia%></td>
+                        <td><%=singleHotel.Dientich%></td>
+                        <td><%=singleHotel.GhiChu%></td>
+                        <td id="hotel<%=singleHotel.Id%>"><%=singleHotel.isDelete%></td>
+                        <td>
+                            <button onclick='deleteHotel("<%=singleHotel.Id%>")' class="btn btn-danger">Delete</button> 
+                        </td>
+                    </tr>
+                    <%})%>
+               
+              </table>
+            </div>
+            <% } %>
+            <% if (user) { %>
+            <div class="newtable">
+                <table id="customers">
+                    <tr class="titletable" >
+                      <th style="background-color: #FA991C;">Họ Tên</th>
+                      <th style="background-color: #FA991C;">Username</th>
+                      <th style="background-color: #FA991C;">Tình trạng</th>
+                      <th style="background-color: #FA991C;
+                                 max-width: 50px;
+                                 width: 50px;">Option</th>
+                    </tr>
+                    <% user.forEach(useracc=>{%>
+                    <tr>
+                      <td><%=useracc.HoTen%></td>
+                      <td><%=useracc.TenDangNhap%></td>
+                      <td id="<%=useracc.TenDangNhap%>"><%=useracc.isDelete%></td>
+                      <td>
+                            <button onclick='deleteUser("<%=useracc.TenDangNhap%>")' class="btn btn-danger">Delete</button> 
+                      </td>
+                    </tr>
+                    <%})%>
+            </table>
+            </div>
+            <% } %>
+         
+    <div class="footer">
+
+    </div>
+    <script>
+        function deleteUser (id) {
+            const results = fetch(`http://localhost:3000/admin/deleteUser/${id}`);
+            document.getElementById(`${id}`).innerHTML = 1;
+        };
+        function deleteHotel (id) {
+            const results = fetch(`http://localhost:3000/admin/deleteHotel/${id}`);
+            document.getElementById(`hotel${id}`).innerHTML = 1;
+        };
+    </script>
+</body>
