@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <head>
         <meta charset="UTF-8">
@@ -86,18 +87,21 @@
     <div class="body">
         <div class="ctn">
             <div class="con-left">
+              
                 <% listHotel.forEach(hotel=>{%>
-                <div class="newcard">
-                    <img src=<%=hotel.HinhAnh%>
-                    <div class="text-name"><%=hotel.TenTro%></div>
-                    <h6><%=hotel.TenTro%></h6>
-                    <h6>|</h6>
-                    <h6><%=hotel.Gia%></h6>
-                    <h6>|</h6>
-                    <h6><%=hotel.DienTich%><sup>2</sup></h6>
-                    <p><%=hotel.GhiChu%></p>
-                </div>
-              <%})%>
+                    <div class="newcard">
+                        <img src=<%=hotel.HinhAnh%> alt="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both">
+                        <div class="text-name"><%=hotel.DiaChi%></div>
+                        <h6><%=hotel.TenTro%></h6>
+                        <h6>|</h6>
+                        <h6><%=hotel.Gia%></h6>
+                        <h6>|</h6>
+                        <h6><%=hotel.DienTich%><sup>2</sup></h6>
+                        <p><%=hotel.GhiChu%></p>
+                    </div>
+                  <%})%>
+
+                
             </div>
             <div class="con-right">
             </div>

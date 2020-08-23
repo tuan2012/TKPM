@@ -40,4 +40,19 @@ router.delete('/listUser',(req,res)=>{
 router.put('/listUser',(req,res)=>{
     landlords.updateUser(req,res);
 });
+router.post('/signup',(req,res)=>{
+    landlords.signup(req,res);
+})
+router.get('/signup',(req,res)=>{
+    res.render('signup');
+})
+router.post('/',(req,res)=>{
+    landlords.login(req,res);
+})
+router.get('/',(req,res)=>{
+    res.render("login");
+})
+router.get('/dashboard',(req,res)=>{
+    res.send("Dashboard");
+})
 module.exports = router;

@@ -59,10 +59,10 @@ const getListUser=(req,res)=>{
 // Xóa user ra khỏi trọ
 //Tham sô truyền vào là IDUser(TenDangNhap)
 const deleteUser=(req,res)=>{
-    let {IdUser}=req.body;
+    let {idUser}=req.body;
     let sql="Update khachhang set IdPhongTro=null where Id=?";
     //lay id chu tro
-    connectMySQL.query(sql,IdUser,(err,results,feild)=>{
+    connectMySQL.query(sql,idUser,(err,results,feild)=>{
         if(err) return err;
         res.status(200).json({message:"Delete Success"});
     });
@@ -71,10 +71,10 @@ const deleteUser=(req,res)=>{
 //Thêm user vào trong nhà trọ
 //Tham số truyền vào là Id khách hàng và id phòng trọ
 const updateUser=(req,res)=>{
-    let {tenDangNhap,IdPhongTro}=req.body;
+    let {tenDangNhap,idPhongTro}=req.body;
     let sql="update thongtinkhachhang set IdPhongTro=? where TenDangNhap=? ";
     //lay id chu tro
-    connectMySQL.query(sql,[IdPhongTro,tenDangNhap],(err,results,feild)=>{
+    connectMySQL.query(sql,[idPhongTro,tenDangNhap],(err,results,feild)=>{
         if(err) return err;
         res.status(200).json({message:"Add Success"})
     });
@@ -123,24 +123,47 @@ const deleteNotice=(req,res)=>{
     })
 }
 const login=(req,res)=>{
-    let {username,password}=req.body;
-    let sql="select * from chutro where TenDangNhap=?";
-    connectMySQL.query(sql,username,(err,results)=>{
-        if(results.length>0&&bCrypt.compare(password,results[0].MatKhau))
+    let {tenDangNhap,matKhau}=req.body;
+    let sql="select * from khachhang where TenDangNhap=?";
+    connectMySQL.query(sql,tenDangNhap,(err,results)=>{
+        console.log(results)
+        if(results.length>0)
         {
-            res.redirect('/lanlord/dashboard')
+            console.log(matKhau+"  "+results[0].MatKhau)
+            console.log(bCrypt.compareSync(matKhau,results[0].MatKhau))
+            if(results[0].PhanQuyen==1)
+                res.redirect('/');
+            else  if(results[0].PhanQuyen==2)
+                res.redirect("/landlords/dashboard")
+            else
+                res.send("a")
         }
-        res.redirect('/lanlord');
+        else
+            res.redirect('login');
     })
 }
 const signup=(req,res)=>{
-    let{tenDangNhap,matKhau,hoTen,Sdt,diaChi,soCMND}=req.body;
-    let sql="insert chutro(TenDangNhap,MatKhau,HoTen,SoDienThoai,DiaChi,SoCMND) values(?,?,?,?,?,?)";
-    connectMySQL.query(sql,[tenDangNhap,bCrypt.hashSync(matKhau, bCrypt.genSaltSync(10), null),hoTen,Sdt,diaChi,soCMND],(err,results)=>{
-        if(err){ 
-            res.send()
+    let{tenDangNhap,matKhau,hoTen,soDienThoai,diaChi,soCMND,phanQuyen}=req.body;
+    let sql="insert khachhang(TenDangNhap,MatKhau,PhanQuyen) values(?,?,?)";
+    connectMySQL.query(sql,[tenDangNhap,bCrypt.hashSync(matKhau),phanQuyen],(err,results)=>{
+        
+        if(err) res.redirect('signup')
+        else
+        {
+            if(phanQuyen==1)
+                sql="insert thongtinkhachhang(TenDangNhap,HoTen,SoDienThoai,DiaChi,soCMND) values(?,?,?,?,?)";
+            else if(phanQuyen==2)
+                sql="insert chutro(TenDangNhap,HoTen,SoDienThoai,DiaChi,SoCMND) values(?,?,?,?,?)";
+            else
+                sql="insert Admin(TenDangNhap,HoTen,SoDienThoai,DiaChi,SoCMND) values(?,?,?,?,?)";
+            connectMySQL.query(sql,[tenDangNhap,hoTen,soDienThoai,diaChi,soCMND],(err,results)=>{
+                if(results.affectedRows>0)
+                {
+                    res.redirect('/landlords');
+                }
+            })
         }
-        res.redirect('/lanlord');
+       
     })
 }
 module.exports={addHotel,
@@ -149,5 +172,7 @@ module.exports={addHotel,
     deleteHotel,
     getListUser,
     deleteUser,
-    updateUser
+    updateUser,
+    login,
+    signup
 };
