@@ -49,7 +49,7 @@ const updateHotel=(req,res)=>{
 //Lay danh sách user trong các phòng trọ của chủ trọ
 //Tham số truyền vào là IdChuTro
 const getListUser=(req,res)=>{
-    let sql="select * from ((chutro ct join phongtro pt) on pt.TenDangNhap=?) join khachhang kh) on kh.IdPhongTro=pt.Id";
+    let sql="select * from phongtro pt inner join thongtinkhachhang ttkh on ttkh.IdPhongTro=pt.Id where pt.IdChuTro=?";
     let tenDangNhap=req.body;
     connectMySQL.query(sql,tenDangNhap,(err,results,feild)=>{
         if(err)return  err;
