@@ -18,16 +18,13 @@ router.get('/addHotel', function(req, res, next) {
 
 router.post('/addHotel', function (req, res) {
     upload.single('image-hotel')(req, res, function (err) {
-    //   if (err instanceof multer.MulterError) {
-    //     // A Multer error occurred when uploading.
-    //         return err;
-    //   } else if (err) {
-    //     // An unknown error occurred when uploadingx.
-    //         return err;
-    //   }
-      landlords.addHotel(req,res,res.req.file.file);
-      // Everything went fine.
+        console.log("here");
+        landlords.addHotel(req,res,res.req.file.file);
     });
+});
+
+router.get('/deleteHotel=:id', (req, res) => {
+    landlords.deleteHotel(req,res);
 });
 
 router.get('/listHotel', function(req, res, next){
@@ -40,9 +37,9 @@ router.get('/listHotel',(req, res, next)=> {
     landlords.getListHotel(req,res);
 });
 
-router.delete('/listHotel',(req, res)=> {
-   landlords.deleteHotel(req,res);
-});
+// router.delete('/listHotel',(req, res)=> {
+//    landlords.deleteHotel(req,res);
+// });
 
 router.put('/listHotel',(req, res)=> {
     landlords.updateHotel(req,res);

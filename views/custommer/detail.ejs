@@ -23,12 +23,12 @@
         <div class="col-md-5">
             <div class="row" style="margin-bottom: 10px;">
                 <img class="img-fluid rounded mx-auto d-block"
-                    src="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both" alt="">
+                    src="/images/<%=singleHotel.Id%>.jpg" alt="">
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <img class="img-fluid rounded mx-auto d-block" width="100"
                     src="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both" alt="">
-            </div>
+            </div> -->
         </div>
         <div class="col container">
             <h1 class="display-4"> <%=singleHotel.TenTro%>
@@ -93,8 +93,7 @@
 </body>
 <script>
     function deleteItem(id){
-
-        
+        let fet = fetch(`http://localhost:3000/landlords/deleteHotel=${id}`);
     }
     function applyHotel(id){
         let fet = fetch(`http://localhost:3000/apply=${id}`);

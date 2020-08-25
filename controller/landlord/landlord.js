@@ -1,20 +1,31 @@
 const connectMySQL=require('../../connect/connectMySQL');
 var bCrypt = require('bcrypt-nodejs');
-const addHotel=(req,res,pathFileImage)=>{
-    
-    let uri_Image=pathFileImage;
-    const {tenTro,diaChi,ghiChu,gia,idLoaiTro,idChuTro}=req.body;
-    const query="insert into phongtro(TenTro,DiaChi,GhiChu,Gia,IdLoaiTro,IdChuTro,HinhAnh) values(?,?,?,?,?,?,?)";
-    connectMySQL.connect(query,[tenTro,diaChi,ghiChu,gia,idLoaiTro,idChuTro,uri_Image],(err,results,feild)=>{
-        if(err)return err;
-        res.status(200).json({message:"Insert Success"});
-    })
-    
-}
+const addHotel=(req,res)=>{
+    // let uri_Image=pathFileImage;
+    // console.log(uri_Image);
+    const tenTro = req.body.tenTro; 
+    const diaChi = req.body.diaChi;
+    const gia = req.body.gia;
+    const dienTich = req.body.dienTich;
+    const ghiChu = req.body.ghiChu;
+    const idLoaiTro = req.body.idLoaiTro;
+    const idChuTro = req.session.user.TenDangNhap;
+    const uri_Image = null;
+    let sl;
+    const sql = 'select * from phongtro';
+    connectMySQL.query(sql,(err,results,feild)=>{
+    const query=`insert into phongtro(Id,TenTro,DiaChi,GhiChu,DienTich,Gia,IdLoaiTro,IdChuTro,HinhAnh) values(${results.length + 1}, '${tenTro}', '${diaChi}', '${ghiChu}', ${dienTich}, ${gia}, ${idLoaiTro}, '${idChuTro}', '')`;
+        console.log(query);
+        connectMySQL.query(query,(err,results,feild)=>{
+            if(err)return err;
+            res.redirect("/page=1");
+            });
+        });
+    }
 //Xóa phòng trọ
 //Tham số truyền vào là Id Phòng trọ
 const deleteHotel=(req,res)=>{
-    let {idPhongTro}=req.body;
+    let idPhongTro=req.params.id;
     let sql="update phongtro set isDelete=true where Id=?";
     //lay id chu tro
     connectMySQL.query(sql,idPhongTro,(err,results,feild)=>{

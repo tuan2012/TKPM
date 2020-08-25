@@ -61,6 +61,18 @@ const getProductForm=(req,res)=>{
                                         pagi: null,
                                         user: req.session.user});
     });
-}; 
+};
 
-module.exports = {getProductForm};
+const productCategory = (req,res) => {
+    let id = req.params.id;
+    let sql=`SELECT * FROM phongtro WHERE phongtro.IdLoaiTro=${id}`;
+    connectMySQL.query(sql,(err,results,feild)=>{
+        if(err) return err;
+        res.render("custommer/index", {listHotel: results,
+                                        pagi: null,
+                                        user: req.session.user});
+    });
+}
+
+module.exports = {getProductForm,
+                productCategory};

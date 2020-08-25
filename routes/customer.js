@@ -15,6 +15,10 @@ router.get('/page=:num', function(req, res, next) {
   mdHome.listHotel(req,res);
 });
 
+router.get('/category=:id', (req,res)=> {
+  product.productCategory(req,res);
+})
+
 router.get("/single/:id",(req,res,next)=>{
   mdHome.singleProduct(req,res);
 });
