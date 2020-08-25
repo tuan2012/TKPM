@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 require('dotenv').config();
 
 //passport
@@ -28,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000000 }}));
 
 app.use('/', customerRouter);
 app.use('/landlords', landlordsRouter);

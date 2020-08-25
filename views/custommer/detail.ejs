@@ -12,61 +12,10 @@
 </head>
 <body>
     <div class="header"> 
-        <div class="icon">homestayUs</div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Phòng trọ</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Kí túc xá</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Chung cư</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Ở ghép</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Nhà nguyên căn</span> 
-            </a>
-        </div>
-        <div class="nav-user">Đăng nhập</div>
-        <div class="nav-user">Đăng ký</div> 
+       <%- include('../header') -%>
     </div>
     <div class="navigation">
-        <div class="nav-container">
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <div class="btn">
-                    <button>Search</button>
-                </div>
-        </div>
+        <%- include('../navform') -%>
     </div>
     <div class="body">
         <div class="container">
@@ -83,19 +32,19 @@
         </div>
         <div class="col container">
             <h1 class="display-4"> <%=singleHotel.TenTro%>
-                <button type="button" class="btn btn-danger">Delete</button> 
+                <% if(user) {%>
+                <% if(user.PhanQuyen===2 && singleHotel.IdChuTro===user.TenDangNhap) {%><button type="button" style="margin-left: 170px;" onclick="deleteItem(<%=singleHotel.Id%>)" class="btn btn-danger">Delete</button> <%}%>
+                <% if(user.PhanQuyen===1 && user.IdPhongTro===null) {%><button type="button" style="margin-left: 170px;" onclick="applyHotel(<%=singleHotel.Id%>)" class="btn btn-danger">Apply</button> <%}%>
+                <%}%>
+                    
             </h1>
             <dl class="row">
-                <dt class="col-sm-4 h4"><strong>Giá tiền:</strong></dt>
-                <dd class="col-sm-8 lead">
-                    2.000.000
-                </dd>
                 <dt class="col-sm-4 h4"><strong>Khu vực:</strong></dt>
                 <dd class="col-sm-8 lead"><%=singleHotel.DiaChi%></dd>
                 <dt class="col-sm-4 h4"><strong>Giá:</strong></dt>
                 <dd class="col-sm-8 lead"><%=singleHotel.Gia%>₫</dd>
                 <dt class="col-sm-4 h4"><strong>Diện tích:</strong></dt>
-                <dd class="col-sm-8 lead"><%=singleHotel.Dientich%></dd>
+                <dd class="col-sm-8 lead"><%=singleHotel.DienTich%></dd>
             </dl>
         </div>
     </div>
@@ -139,6 +88,15 @@
     </div>
     
     <div class="footer">
-
+        <%- include('../footer') -%>
     </div>
 </body>
+<script>
+    function deleteItem(id){
+
+        
+    }
+    function applyHotel(id){
+        let fet = fetch(`http://localhost:3000/apply=${id}`);
+    }
+</script>

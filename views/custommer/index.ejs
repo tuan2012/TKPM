@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <head>
         <meta charset="UTF-8">
-        <title>NLP</title>
+        <title>homestayUS</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="../css2.css">
         <l<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -13,102 +13,92 @@
 </head>
 <body>
     <div class="header"> 
-        <div class="icon">homestayUs</div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Phòng trọ</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Kí túc xá</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Chung cư</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Ở ghép</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Nhà nguyên căn</span> 
-            </a>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Duc Huy</button>
-            <div class="dropdown-content">
-            <a href="#">Thông tin</a>
-            <a href="#">Phòng trọ của tôi</a>
-            <a href="#">Đăng xuất</a>
-            </div>
-          </div>
-        <!-- <div class="nav-user">Đăng nhập</div>
-        <div class="nav-user">Đăng ký</div>  -->
+        <%- include('../header') -%>
     </div>
     <div class="navigation">
-        <div class="nav-container">
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="q1" selected="selected">Quận 1</option>
-                    <option value="q2">Quận 2</option>
-                    <option value="q3">Quận 3</option>
-                    <option value="q4">Quận 4</option>
-                    <option value="q5">Quận 5</option>
-                    <option value="q6">Quận 6</option>
-                    <option value="q7">Quận 7</option>
-                    <option value="q8">Quận 8</option>
-                    <option value="q9">Quận 9</option>
-                    <option value="q10">Quận 10</option>
-                    <option value="q11">Quận 11</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="15" selected="selected">Dưới 1.500.000đ</option>
-                    <option value="30">1.500.000 đến 3.000.000</option>
-                    <option value="50">3.000.000 đến 5.000.000</option>
-                    <option value="100">5.000.000 đến 10.000.000</option>
-
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="10" selected="selected">10m2</option>
-                    <option value="20">10m2 đến 20m2</option>
-                </select>
-                <div class="btn">
-                    <button>Tìm kiếm</button>
-                </div>
-        </div>
+        <%- include('../navform') -%>
     </div>
     <div class="body">
         <div class="ctn">
-            <div class="con-left">
-              
+            <div class="con-left" id="filter">
+                <% if (listHotel) {%>
                 <% listHotel.forEach(hotel=>{%>
                     <div class="newcard">
-                        <img src=<%=hotel.HinhAnh%> alt="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both">
+                        <img src="https://images.motthegioi.vn:8443/media/ngocthanh/YzNhNzQ2NTBiMDE0NTE0YTA4MDU=.jpg"alt="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both">
                         <div class="text-name"><%=hotel.DiaChi%></div>
                         <h6><%=hotel.TenTro%></h6>
-                        <h6>|</h6>
+                        <h6> | </h6>
                         <h6><%=hotel.Gia%></h6>
-                        <h6>|</h6>
-                        <h6><%=hotel.DienTich%><sup>2</sup></h6>
+                        <h6> | </h6>
+                        <h6><%=hotel.DienTich%>m<sup>2</sup></h6>
                         <p><%=hotel.GhiChu%></p>
+                        <a href="/single/<%=hotel.Id%>">Xem chi tiết</a>
                     </div>
                   <%})%>
-
-                
-
+                  <%}%>
+                  <% if(pagi) { %>
+                  <div class="pagi" style="display: flex;
+                                        text-align: center;
+                                        align-items: center;
+                                        justify-content: center;
+                                        margin-top: 30px;"> 
+                        <nav aria-label="Page navigation example"">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                <a class="page-link" href='/page=<%if(pageCurrent===1){%>1<%}else{%><%=pageCurrent-1%><%}%>' aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                </li>
+                                <% for(var i=1;i<=page;i++) {%>
+                                <li class="page-item"><a class="page-link" href="/page=<%=i%>"><%=i%></a></li>
+                                <% } %>
+                                <li class="page-item">
+                                <a class="page-link" href='/page=<%if(pageCurrent===page){%><%=pageCurrent%><%}else{%><%=pageCurrent+1%><%}%>' aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                                </li>
+                            </ul>
+                        </nav>
+                     </div>
+                     <% } %>
             </div>
             <div class="con-right">
             </div>
+            
         </div>
+       
     </div>
     <div class="footer">
-
+        <%- include('../footer') -%>
     </div>
+    <script>
+            // function getForm() {
+            //     console.log("Form");
+            //     let acreage = document.getElementById("acreage").value;
+            //     let area = document.getElementById("area").value;
+            //     let price = document.getElementById("price").value;
+            //     let type = document.getElementById("type").value;
+            //     var innerHTMl = "";
+            //     let fet = fetch(`http://localhost:3000/price=${price}&area=${area}&acreage=${acreage}&type=${type}`);
+            //   fet.then((response) => response.json())
+            //  .then((data) => {
+            //     var innerHtml = "";
+            //     data.forEach(index => {
+            //         innerHtml = innerHtml + `<div class="newcard">
+            //             <img src= alt="https://media.laodong.vn/Storage/NewsPortal/2018/10/19/637067/9-2_Opt.jpg?w=414&h=276&crop=auto&scale=both">
+            //             <div class="text-name">${index.DiaChi}</div>
+            //             <h6>${index.TenTro}</h6>
+            //             <h6> | </h6>
+            //             <h6>${index.Gia}</h6>
+            //             <h6> | </h6>
+            //             <h6>${index.DienTich}m<sup>2</sup></h6>
+            //             <p>${index.GhiChu}</p>
+            //         </div>`
+            //     });
+            //     document.getElementById("filter").innerHTML = innerHtml;
+            //  });
+            //     }
+        </script>
 </body>

@@ -8,6 +8,11 @@ body {
   border-radius: 0px;
 }
 
+.icon a:hover {
+  color: white;
+  text-decoration: none;
+}
+
 .header {
   background-color: #032539;
   height: 60px;
@@ -30,9 +35,31 @@ body {
 
 .footer {
   background-color: #032539;
-  height: 300px;
+  height: 350px;
   margin-top: 10px;
 } 
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.footer .cate {
+  color: white;
+  grid-column-start: 2;
+  grid-column-end: 2;
+}
+
+.footer .student {
+  color: white;
+  grid-column-start: 1;
+  grid-column-end: 1;
+}
+
+.cate p a:hover {
+  color: white;
+  text-decoration: none;
+}
 
 .header * {
   color: #FA991C;
@@ -252,4 +279,8 @@ select {
   .newtable {
     padding: 30px;
     margin: 0 20px 0 20px;
+  }
+
+  .hotel h4 {
+    margin-left: 40px;
   }

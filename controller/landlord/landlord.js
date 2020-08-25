@@ -26,12 +26,16 @@ const deleteHotel=(req,res)=>{
 //Lấy danh sách trọ
 //Tham số truyền vào là tên đăng nhập Chu Tro
 const getListHotel=(req,res)=>{
-    let {tenDangNhap}=req.body;
-    let sql="select *from phongtro where TenDangNhap=? ";
+    let {TenDangNhap}=req.session.user;
+    console.log(TenDangNhap);
+    let sql="select *from phongtro where IdChuTro=? ";
     //lay id chu tro
-    connectMySQL.query(sql,tenDangNhap,(err,results,feild)=>{
+    connectMySQL.query(sql,TenDangNhap,(err,results,feild)=>{
         if(err) return err;
-        res.status(200).json(results);
+        res.render("table", {listHotel: results,
+                            user: req.session.user,
+                            isHotel: true,
+                            isUser: false});
     });
 }
 //Cap Nhat Nha Trọ
@@ -49,20 +53,28 @@ const updateHotel=(req,res)=>{
 //Lay danh sách user trong các phòng trọ của chủ trọ
 //Tham số truyền vào là IdChuTro
 const getListUser=(req,res)=>{
-    let sql="select * from phongtro pt inner join thongtinkhachhang ttkh on ttkh.IdPhongTro=pt.Id where pt.IdChuTro=?";
-    let tenDangNhap=req.body;
-    connectMySQL.query(sql,tenDangNhap,(err,results,feild)=>{
+    let id = req.params.id;
+    let sql=`select * from phongtro pt, thongtinkhachhang ttkh where pt.Id=ttkh.IdPhongTro AND pt.Id=${id}`;
+  
+    connectMySQL.query(sql,(err,results,feild)=>{
         if(err)return  err;
-        res.status(200).json(results);
+        var tempHotel = []
+        if (results.length === 0) {
+            results[0] = {TenTro: null, Gia: null, DienTich: null, DiaChi: null};
+        }
+        res.render("table", {listUser: results,
+                            user: req.session.user,
+                            isHotel: false,
+                            isUser: true});
     });
 }
 // Xóa user ra khỏi trọ
 //Tham sô truyền vào là IDUser(TenDangNhap)
 const deleteUser=(req,res)=>{
-    let {idUser}=req.body;
-    let sql="Update khachhang set IdPhongTro=null where Id=?";
+    let idUser=req.params.id;
+    let sql=`Update thongtinkhachhang set IdPhongTro=null where TenDangNhap='${idUser}'`;
     //lay id chu tro
-    connectMySQL.query(sql,idUser,(err,results,feild)=>{
+    connectMySQL.query(sql,(err,results,feild)=>{
         if(err) return err;
         res.status(200).json({message:"Delete Success"});
     });
@@ -71,7 +83,8 @@ const deleteUser=(req,res)=>{
 //Thêm user vào trong nhà trọ
 //Tham số truyền vào là Id khách hàng và id phòng trọ
 const updateUser=(req,res)=>{
-    let {tenDangNhap,idPhongTro}=req.body;
+    let tenDangNhap = req.session.user.TenDangNhap;
+    let idPhongTro = req.params.id;
     let sql="update thongtinkhachhang set IdPhongTro=? where TenDangNhap=? ";
     //lay id chu tro
     connectMySQL.query(sql,[idPhongTro,tenDangNhap],(err,results,feild)=>{
@@ -82,38 +95,77 @@ const updateUser=(req,res)=>{
 //Tạo Thông báo
 //Các tông tin của thông báo
 const createNotice= (req,res)=>{
-    let {tenThongBao,noiDung,IdPhongTro,IdChuTro}=req.body;
-    let sql="insert thongbao(TenThongBao,NoiDung,IdChuTro) values(?,?,?)";
-    connectMySQL.query(sql,[tenThongBao,noiDung,IdChuTro],(err,results,feilds)=>{
+    let tenThongBao = req.body.name;
+    let noiDung = req.body.content;
+    let IdChuTro = req.session.user.TenDangNhap;
+    let IdTro = req.body.idTro;
+    let sqlGetAnnounce = "select * from thongbao";
+    connectMySQL.query(sqlGetAnnounce, (err,results,feild)=>{
         if(err) return err;
-        else{
-                let LastId;
-                connectMySQL.query("select* from thongbao",(err,results,feilds)=>{
-                    if(err)return  err;
-                    LastId=results[results.length-1].Id;
-            });
-            let query="insert thongbaophongtro(IdThongBao,TdPhongTro) values(?,?)";
-            IdPhongTro.forEach(e=> {
-            // chưa làm
-                    connectMySQL.query(query,[LastId,e],(err,results,feilds)=>{
-                    if(err) return err;
-                    res.status(200).json({message:"Insert success"});
-                })
-            });
-        }
-        
-    })
+        var rs = results;
+        var length = rs.length +1;
+        let sql=`insert thongbao(Id,TenThongBao,NoiDung,IdChuTro) values(${length},'${tenThongBao}','${noiDung}','${IdChuTro}')`;
+        console.log(sql);
+        connectMySQL.query(sql, (err,results,feild)=>{
+            if(err) return err;
+            let sql = `insert thongbaophongtro(IdThongBao,IdPhongTro) values(${length},'${IdTro}')`;
+            connectMySQL.query(sql, (err,results,feild)=>{
+            res.redirect('/landlords/myNotice');
+             });
+         });
+    });
+    // connectMySQL.query(sql,[tenThongBao,noiDung,IdChuTro],(err,results,feilds)=>{
+    //     if(err) return err;
+    //     else{
+    //             let LastId;
+    //             connectMySQL.query("select* from thongbao",(err,results,feilds)=>{
+    //                 if(err)return  err;
+    //                 LastId=results[results.length-1].Id;
+    //         });
+    //         let query="insert thongbaophongtro(IdThongBao,TdPhongTro) values(?,?)";
+    //         IdPhongTro.forEach(e=> {
+    //         // chưa làm
+    //                 connectMySQL.query(query,[LastId,e],(err,results,feilds)=>{
+    //                 if(err) return err;
+    //                 res.status(200).json({message:"Insert success"});
+    //             })
+    //         });
+    //     }
+    //})
 }
 //Lấy danh sách các thông báo đã tạo
 //Tham số là IdChuTro
 const getListNotice=(req,res)=>{
-    let {IdChuTro}=req.body;
-    let sql="select * from chutro ct inner join thongbao tb  on tb.IdChuTro=? inner join thongbaophongtro tbpt on tb.IdPhongTro=tbpt.IdPhongTro inner join phongtro pt on tbpt.IdPhongTro=pt.Id";
-    connectMySQL.query(sql,IdChuTro,(err,results,feilds)=>{
+    let IdChuTro = req.session.user.TenDangNhap;
+    let sql=`select * from thongbaophongtro tbpt, thongbao tb, phongtro pt where tbpt.IdThongBao = tb.Id and tb.IdChuTro = '${IdChuTro}' and pt.Id=tbpt.IdPhongTro`;
+    connectMySQL.query(sql,(err,results,feilds)=>{
+        var notice = results;
+        let newsql = `select * from phongtro, chutro where phongtro.IdChuTro=chutro.TenDangNhap and chutro.TenDangNhap='${IdChuTro}'`;
+        connectMySQL.query(newsql,(err,results,feilds)=>{
         if(err)return err;
-        res.status(200).json(results);
+        var option = results;
+        console.log(option);
+        res.render("announc", {user: req.session.user,
+                                rs: notice,
+                                option: option
+        });
+    });
     });
 }
+//danh sach thong bao cua User
+const getNotice=(req,res)=>{
+    let IdUser = req.session.user.TenDangNhap;
+    let sql=`select * from phongtro pt, thongbaophongtro tbpt, thongbao tb, thongtinkhachhang ttkh where tbpt.IdThongBao = tb.Id and ttkh.IdPhongTro = tbpt.IdPhongTro and ttkh.TenDangNhap='${IdUser}' and pt.Id=tbpt.IdPhongTro`;
+    console.log(sql);
+    connectMySQL.query(sql,(err,results,feilds)=>{
+        if(err)return err;
+        console.log(results);
+        res.render("announc", {user: req.session.user,
+                                rs: results
+        });
+    });
+}
+
 const deleteNotice=(req,res)=>{
     let{Id}=req.body;
     let sql="update thongbao set isDelete=false where Id=?"
@@ -126,17 +178,31 @@ const login=(req,res)=>{
     let {tenDangNhap,matKhau}=req.body;
     let sql="select * from khachhang where TenDangNhap=?";
     connectMySQL.query(sql,tenDangNhap,(err,results)=>{
-        console.log(results)
         if(results.length>0)
         {
             console.log(matKhau+"  "+results[0].MatKhau)
             console.log(bCrypt.compareSync(matKhau,results[0].MatKhau))
-            if(results[0].PhanQuyen==1)
-                res.redirect('/');
-            else  if(results[0].PhanQuyen==2)
-                res.redirect("/landlords/dashboard")
-            else
-                res.send("a")
+            if(results[0].PhanQuyen==1){
+                let sql="select * from khachhang, thongtinkhachhang where khachhang.TenDangNhap=? and khachhang.TenDangNhap=thongtinkhachhang.TenDangNhap";
+                connectMySQL.query(sql,tenDangNhap,(err,results)=>{
+                req.session.decen = 1;
+                req.session.user = results[0];
+                res.redirect('/page=1');
+                })}
+            else  if(results[0].PhanQuyen==2) {
+                let sql="select * from khachhang, chutro where khachhang.TenDangNhap=? and khachhang.TenDangNhap=chutro.TenDangNhap";
+                connectMySQL.query(sql,tenDangNhap,(err,results)=>{
+                req.session.decen = 2;
+                req.session.user = results[0];
+                res.redirect("/page=1")          
+                 })}
+            else {
+                let sql="select * from khachhang, admin where khachhang.TenDangNhap=? and khachhang.TenDangNhap=admin.TenDangNhap";
+                connectMySQL.query(sql,tenDangNhap,(err,results)=>{
+                req.session.decen = 3;
+                req.session.user = results[0];
+                res.redirect("/admin/listUser")
+                })}
         }
         else
             res.redirect('login');
@@ -146,31 +212,55 @@ const signup=(req,res)=>{
     let{tenDangNhap,matKhau,hoTen,soDienThoai,diaChi,soCMND,phanQuyen}=req.body;
     let sql="insert khachhang(TenDangNhap,MatKhau,PhanQuyen) values(?,?,?)";
     connectMySQL.query(sql,[tenDangNhap,bCrypt.hashSync(matKhau),phanQuyen],(err,results)=>{
-        
         if(err) {
             console.log(err)
-            res.redirect('signup')
-           
+            res.redirect('/signup')
             }
         else
         {
-            console.log(results);
-            if(phanQuyen==1)
+            if(phanQuyen==1) {
                 sql="insert thongtinkhachhang(TenDangNhap,HoTen,SoDienThoai,DiaChi,soCMND) values(?,?,?,?,?)";
-            else if(phanQuyen==2)
-                sql="insert chutro(TenDangNhap,HoTen,SoDienThoai,DiaChi,SoCMND) values(?,?,?,?,?)";
-            else
-                sql="insert Admin(TenDangNhap,HoTen,SoDienThoai,DiaChi,SoCMND) values(?,?,?,?,?)";
-            connectMySQL.query(sql,[tenDangNhap,hoTen,soDienThoai,diaChi,soCMND],(err,results)=>{
-                if(results.affectedRows>0)
-                {
-                    res.redirect('/landlords');
+                connectMySQL.query(sql,[tenDangNhap,hoTen,soDienThoai,diaChi,soCMND],(err,results)=>{
+                    if(results.affectedRows>0) 
+                    {   
+                        let sql="select * from khachhang, thongtinkhachhang where khachhang.TenDangNhap=? and khachhang.TenDangNhap=thongtinkhachhang.TenDangNhap";
+                        connectMySQL.query(sql,tenDangNhap,(err,results)=>{
+                        req.session.decen = 1;
+                        req.session.user = results[0];
+                        res.redirect('/page=1');
+                        })
+                    }
+                })
                 }
+            else if(phanQuyen==2) {
+                sql="insert chutro(TenDangNhap,HoTen,SoDienThoai,DiaChi,SoCMND) values(?,?,?,?,?)";
+                connectMySQL.query(sql,[tenDangNhap,hoTen,soDienThoai,diaChi,soCMND],(err,results)=>{
+                    if(results.affectedRows>0) 
+                    {   
+                        let sql="select * from khachhang, chutro where khachhang.TenDangNhap=? and khachhang.TenDangNhap=chutro.TenDangNhap";
+                        connectMySQL.query(sql,tenDangNhap,(err,results)=>{
+                        req.session.decen = 2;
+                        req.session.user = results[0];   
+                        res.redirect('/page=1');    
+                         })}
+                       
+                    })
+                }
+            else{
+                sql="insert Admin(TenDangNhap,HoTen,SoDienThoai,DiaChi,SoCMND) values(?,?,?,?,?)";
+                connectMySQL.query(sql,[tenDangNhap,hoTen,soDienThoai,diaChi,soCMND],(err,results)=>{
+                    if(results.affectedRows>0) 
+                    {   
+                        let sql="select * from khachhang, admin where khachhang.TenDangNhap=? and khachhang.TenDangNhap=admin.TenDangNhap";
+                        connectMySQL.query(sql,tenDangNhap,(err,results)=>{
+                        req.session.decen = 3;
+                        req.session.user = results[0];
+                        res.redirect("/admin/listUser")
             })
         }
-       
-    })
-}
+        })
+        }
+}})}
 module.exports={addHotel,
     getListHotel,
     updateHotel,
@@ -179,5 +269,8 @@ module.exports={addHotel,
     deleteUser,
     updateUser,
     login,
-    signup
+    signup,
+    getListNotice,
+    getNotice,
+    createNotice
 };

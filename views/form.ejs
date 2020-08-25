@@ -12,75 +12,20 @@
 </head>
 <body>
     <div class="header"> 
-        <div class="icon">homestayUs</div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Phòng trọ</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Kí túc xá</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Chung cư</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Ở ghép</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Nhà nguyên căn</span> 
-            </a>
-        </div>
-        <div class="nav-user">Đăng nhập</div>
-        <div class="nav-user">Đăng ký</div> 
+        <%- include('header') -%>
     </div>
     <div class="navigation">
-        <div class="nav-container">
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <div class="btn">
-                    <button>Search</button>
-                </div>
-        </div>
+        <%- include('navform') -%>
     </div>
     <div class="body">
-        <form class="container card" action="/upload" method="post" enctype="multipart/form-data">
-
+        <form class="container card" action="/landlords/addHotel" method="post" enctype="multipart/form-data">
             <div class="row justify-content-md-center display-4" style="margin: 15px;">Đăng sản phẩm của bạn</div>
-
             <hr>
-
             <div class="row">
                 <div class="col-md-5 form-group">
                     <label style="color: black;" for="anh">Example file input</label>
                     <input name="avatar" type="file" class="form-control-file" id="anh" multiple>
                 </div>
-
                 <div class="col-md-7">
                     <div class="form-group">
                         <label style="color: black;" for="input_product_name">Tên sản phẩm</label>
@@ -163,6 +108,6 @@
 </div>
     
 <div class="footer">
-
+    <%- include('footer') -%>
 </div>
 </body>

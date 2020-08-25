@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<head>
+        <meta charset="UTF-8">
+        <title>homestayUs</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../css2.css">
+        <l<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="header"> 
+        <%- include('./header') -%>
+    </div>
+    <div class="navigation">
+      <%- include('./navform')-%>
+    </div>
+    <div class="body">
+        
+        <!-- Kiem tra nếu là người thuộc phòng trọ -->
+        <% if(user.PhanQuyen==2) {%>
+        <div class="newtable">
+        <table id="customers">
+            <tr class="titletable" >
+                <th style="background-color: #FA991C;">Tên trọ</th>
+                <th style="background-color: #FA991C;">Tên thông báo</th>
+                <th style="background-color: #FA991C;">Nội dung</th>
+            </tr>      
+                <% rs.forEach(announce => {%>
+                <tr>
+                    <td><%=announce.TenTro%></td>
+                    <td><%=announce.TenThongBao%></td>
+                    <td><%=announce.NoiDung%></td>
+                </tr>
+                <%})%>
+                <form action="/landlords/createNotice" method="post">
+                    <tr>    
+                        <td> <select id="type" name="idTro">
+                            <% option.forEach(ht => {%> 
+                                <option value="<%=ht.Id%>"><%=ht.TenTro%></option>
+                            <%})%>
+                            </select></td>
+                        <td><input type="text" name="name"></td>
+                        <td><input type="text" name="content" style="width: 500px;"> <button type="submit">Send</button></td>
+                    </tr>
+                    </form>
+          </table>
+          </div>
+        <%}%>
+        <% if(user.PhanQuyen==1) {%>
+            <div class="thongtin" style="margin: 40px 70px 40px 70px ;">
+                <%if(rs.length!=0){%><div><h2><%=rs[0].TenTro%></h2></div><%}%>
+                <%if(rs.length!=0){%><div><h3>Giá: <%=rs[0].Gia%></h3></div><%}%>
+            </div>
+          <% if(rs.length!=0) {%>  
+          <div class="newtable">
+            <table id="customers">
+                <tr class="titletable" >
+                    <th style="background-color: #FA991C;">Tên thông báo</th>
+                    <th style="background-color: #FA991C;">Nội dung</th>
+                   
+                </tr>
+                <% rs.forEach(announce => {%>
+                    <tr>
+                        <td><%=announce.TenThongBao%></td>
+                        <td><%=announce.NoiDung%></td>
+                    </tr>
+                    <%})%>
+                </table>
+            </div>
+            <%}else{%>
+                <div style="text-align: center;
+                            margin-bottom: 70px;"><h2>Bạn chưa thuộc phòng trọ nào</h2></div>
+                
+            <%}%>
+        <%}%>
+    </div>
+    
+    <div class="footer">
+        <%- include('./footer') -%>
+    </div>
+</body>

@@ -1,0 +1,42 @@
+<div class="icon"><a href="/page=1">homestayUs</a></div>
+<div class="nav"> 
+    <a href="/">
+        <span class="text">Phòng trọ</span> 
+    </a>
+</div>
+<div class="nav"> 
+    <a href="/">
+        <span class="text">Kí túc xá</span> 
+    </a>
+</div>
+<div class="nav"> 
+    <a href="/">
+        <span class="text">Chung cư</span> 
+    </a>
+</div>
+<div class="nav"> 
+    <a href="/">
+        <span class="text">Ở ghép</span> 
+    </a>
+</div>
+<div class="nav"> 
+    <a href="/">
+        <span class="text">Nhà nguyên căn</span> 
+    </a>
+</div>
+<% if(user) {%>
+<div class="dropdown">
+    <button class="dropbtn"><%=user.HoTen%></button>
+    <div class="dropdown-content">
+    <a href="#">Thông tin</a>
+    <% if(user.PhanQuyen==1){%><a href="/notice">Phòng trọ của tôi</a><%}%>
+    <% if(user.PhanQuyen==2){%><a href="/landlords/listHotel">Phòng trọ của tôi</a><%}%>
+    <% if(user.PhanQuyen==2){%><a href="/landlords/addHotel">Thêm phòng trọ</a><%}%>
+    <% if(user.PhanQuyen==2){%><a href="/landlords/myNotice">Thông báo của tôi</a><%}%>
+    <a href="/logout">Đăng xuất</a>
+    </div>
+  </div>
+<%}else{%>
+    <div  class="nav-user"> <a href="/login">Đăng nhập</a></div>
+    <div  class="nav-user"><a href="/signup">Đăng ký</a></div> 
+<%}%>

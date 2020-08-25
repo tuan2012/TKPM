@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
         <meta charset="UTF-8">
-        <title>NLP</title>
+        <title>homestayUs</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="../css2.css">
         <l<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -12,102 +12,77 @@
 </head>
 <body>
     <div class="header"> 
-        <div class="icon">homestayUs</div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Phòng trọ</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Kí túc xá</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Chung cư</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Ở ghép</span> 
-            </a>
-        </div>
-        <div class="nav"> 
-            <a href="/">
-                <span class="text">Nhà nguyên căn</span> 
-            </a>
-        </div>
-        <div class="nav-user">Đăng nhập</div>
-        <div class="nav-user">Đăng ký</div> 
+        <%- include('./header') -%>
     </div>
     <div class="navigation">
-        <div class="nav-container">
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <select name="pay">
-                    <option value="">--Chọn--</option>
-                    <option value="cod" selected="selected">Thanh toán tại nhà</option>
-                    <option value="banking">Thanh toán qua Thẻ tín dụng</option>
-                </select>
-                <div class="btn">
-                    <button>Search</button>
-                </div>
-        </div>
+      <%- include('./navform')-%>
     </div>
     <div class="body">
         
         <!-- Kiem tra nếu là người thuộc phòng trọ -->
+        <% if(isUser) {%>
+        <div class="hotel" style="margin-top: 20px;
+                                margin-left: 50px;">
+            <% if(!isHotel) {%>
+            <h2><%=listUser[0].TenTro%></h2>
+            <%if(listUser[0].Gia){%><h4>Giá: <%=listUser[0].Gia%></h4><%}%>
+            <%if(listUser[0].Gia){%><h4>Diện tích: <%=listUser[0].DienTich%>m<sup>2</sup></h4><%}%>
+                <%if(listUser[0].Gia){%><h4>Địa chỉ: <%=listUser[0].DiaChi%></h4><%}%>
+            <%}%>
+        </div>
         <div class="newtable">
         <table id="customers">
             <tr class="titletable" >
               <th style="background-color: #FA991C;">Tên người ở</th>
               <th style="background-color: #FA991C;">Liên hệ</th>
               <th style="background-color: #FA991C;">Tình trạng</th>
+              <th style="background-color: #FA991C;">Option</th>
             </tr>
+            <% if(listUser[0].TenTro) {%>
+            <% listUser.forEach(user => {%>
             <tr>
-              <td >Alfreds Futterkiste</td>
-              <td>Maria Anders</td>
-              <td>Germany</td>
+                <td><%=user.HoTen%></td>
+                <td><%=user.SoDienThoai%></td>
+                <td id="tinhtrang<%=user.TenDangNhap%>"><%if(user.IdPhongTro){%>1<%}else{%>0<%}%></td>
+                <td><%if(user.IdPhongTro){%>
+                    <button type="button" onclick="deleteUser('<%=user.TenDangNhap%>', '<%=user.IdPhongTro%>')" class="btn btn-danger">Delete</button>
+                    <%}else{%>
+                        <%}%>
+                </td>
             </tr>
-            <tr>
-              <td>Berglunds snabbköp</td>
-              <td>Christina Berglund</td>
-              <td>Sweden</td>
-            </tr>
-            <tr>
-              <td>Centro comercial Moctezuma</td>
-              <td>Francisco Chang</td>
-              <td>Mexico</td>
-            </tr>
-            <tr>
-              <td>Ernst Handel</td>
-              <td>Roland Mendel</td>
-              <td>Austria</td>
-            </tr>
-            <tr>
-              <td>Island Trading</td>
-              <td>Helen Bennett</td>
-              <td>UK</td>
-            </tr>
+            <%})%>
+            <%}%>
           </table>
           </div>
+          <%}%>
+          <% if(isHotel) {%>
+          <div class="newtable">
+            <table id="customers">
+                <tr class="titletable" >
+                    <th style="background-color: #FA991C;">Tên trọ</th>
+                    <th style="background-color: #FA991C;">Địa chỉ</th>
+                    <th style="background-color: #FA991C;">Tình trạng</th>
+                </tr>
+                <% listHotel.forEach(hotel => {%>
+                <tr>    
+                    <td><a href="/landlords/listUser=<%=hotel.Id%>"><%=hotel.TenTro%></a></td>
+                    <td><%=hotel.DiaChi%></td>
+                    <td><%=hotel.isDelete%></td>
+                </tr>
+                <%})%>
+                
+                </table>
+            </div>
+            <%}%>
     </div>
     
     <div class="footer">
-
+        <%- include('./footer') -%>
     </div>
+    <script>
+        function deleteUser(userName,id){
+            let callAPI = fetch(`http://localhost:3000/landlords/deleteUser=${userName}`)
+            document.getElementById(`tinhtrang${userName}`).innerHTML = 0;
+        }
+    </script>
 </body>

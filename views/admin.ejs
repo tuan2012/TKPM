@@ -24,11 +24,11 @@
             </a>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">Admin: Duc Huy</button>
+            <button class="dropbtn">Admin: <%=admin.HoTen%></button>
             <div class="dropdown-content">
             <a href="/admin/listHotel">Quản lý sản phẩm</a>
             <a href="/admin/listUser">Quản lý người dùng</a>
-            <a href="#">Đăng xuất</a>
+            <a href="/logout">Đăng xuất</a>
             </div>
           </div>
         <!-- <div class="nav-user">Đăng nhập</div>
@@ -54,7 +54,7 @@
                         <td><%=singleHotel.TenTro%></td>
                         <td><%=singleHotel.DiaChi%></td>
                         <td><%=singleHotel.Gia%></td>
-                        <td><%=singleHotel.Dientich%></td>
+                        <td><%=singleHotel.DienTich%></td>
                         <td><%=singleHotel.GhiChu%></td>
                         <td id="hotel<%=singleHotel.Id%>"><%=singleHotel.isDelete%></td>
                         <td>
@@ -92,7 +92,7 @@
             <% } %>
          
     <div class="footer">
-
+        <%- include('./footer') -%>
     </div>
     <script>
         function deleteUser (id) {

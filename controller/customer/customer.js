@@ -1,10 +1,25 @@
 const connectMySQL=require('../../connect/connectMySQL');
 //Lấy danh sách nhà trọ chưa bị xóa
 const listHotel=(req,res)=>{
+    var pageNumber = parseInt(req.params.num);
+    pageNumber--;
+    const sl = 3;
     let sql="select *from phongtro pt where pt.isDelete=false";
     connectMySQL.query(sql,(err,results,fields)=>{
+    var page = Math.ceil(results.length/sl);
         if(err) return err;
-        res.render("custommer/index",{listHotel:results});
+        var arrayItem = [];
+        for (i=0;i<3;i++){
+           if (results[i+pageNumber*sl]) {
+                arrayItem[i] = results[i+pageNumber*sl];
+           }
+        }
+        pageNumber++;
+        res.render("custommer/index",{listHotel:arrayItem,
+                                    page: page,
+                                    pageCurrent: pageNumber,
+                                    pagi: true,
+                                    user: req.session.user});
     });
 }
 //Xem chi tiết từng nhà trọ
@@ -14,7 +29,9 @@ const singleProduct=(req,res)=>{
     let sql="select *from phongtro where id=?";
     connectMySQL.query(sql,[id],(err,results,fields)=>{
         if(err)return err;
-        res.render("custommer/detail", {singleHotel:results[0]}); // Huy xem chi tiet san pham
+        console.log(req.session.user);
+        res.render("custommer/detail", {singleHotel:results[0],
+                                         user: req.session.user}); // Huy xem chi tiet san pham
     });
 }
 //Xem thông báo của nhà trọ
